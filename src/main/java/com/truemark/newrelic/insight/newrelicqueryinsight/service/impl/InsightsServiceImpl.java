@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Implements the InsightsService.
  *
- * @author Abhijeet Kale
+ * @author Dilip S Sisodia
  * @see InsightsService
  */
 @Service
