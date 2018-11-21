@@ -1,6 +1,6 @@
 package com.truemark.newrelic.insight.newrelicqueryinsight.service;
 
-import com.truemark.newrelic.insight.newrelicqueryinsight.config.QueryConfiguration;
+import com.truemark.newrelic.insight.newrelicqueryinsight.config.properties.Queries;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface DataService {
 
-  void fetchAndPostDataToInsight(String datasourceToQuery, List<QueryConfiguration> queries);
+  void fetchAndPostDataToInsight(String datasourceToQuery, List<Queries> queries);
 }

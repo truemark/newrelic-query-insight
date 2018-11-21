@@ -3,98 +3,99 @@ spring:
     web-application-type: none
   aop:
     proxy-target-class: false
-
 job:
   insight:
     cron: 0 * * * * ?
 
-query-datasources:
+datasources:
   datasources:
-    - oracle
-    - postgre
-    - mysql
-    - sqlserver
-
-oracle:
-  enabled: false
-  hibernate.dialect: org.hibernate.dialect.Oracle12cDialect
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    jdbc-url: jdbc:oracle:thin:@//127.0.0.1:1521/oracledb
-    username: USERNAME
-    password: PASSWORD
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    hikari:
-      maximum-pool-size: 10
-      max-lifetime: 1800000
-      minimum-idle: 1
-      connection-test-query: SELECT 1 FROM DUAL
-      pool-name: Oracle Query Pool
-postgre:
-  enabled: true
-  hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    jdbc-url: jdbc:postgresql://localhost:5432/postgresdb
-    username: USERNAME
-    password: PASSWORD
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 10
-      max-lifetime: 1800000
-      minimum-idle: 1
-      connection-test-query: SELECT 1 FROM DUAL
-      pool-name: Postgres Query Pool
-mysql:
-  enabled: true
-  hibernate.dialect: org.hibernate.dialect.MySQLDialect
-  datasource:
-    jdbc-url: jdbc:mysql://localhost:3306/mysqldb
-    username: USERNAME
-    password: PASSWORD
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    connection-test-query: SELECT 1
-    hikari:
-      maximum-pool-size: 10
-      max-lifetime: 1800000
-      minimum-idle: 1
-      connection-test-query: SELECT 1 FROM DUAL
-      pool-name: MySql Query Pool
-sqlserver:
-  enabled: false
-  hibernate.dialect: org.hibernate.dialect.SQLServer2012Dialect
-  datasource:
-   type: com.zaxxer.hikari.HikariDataSource
-   url: jdbc:sqlserver://localhost\SQLEXPRESS;database=DB
-   username: USERNAME
-   password: PASSWORD
-   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-   hikari:
-     maximum-pool-size: 10
-     max-lifetime: 1800000
-     minimum-idle: 1
-     connection-test-query: SELECT 1 FROM DUAL
-     pool-name: Sql Server Query Pool
+    -
+      enabled: true
+      name: mysql
+      hikari:
+        maximum-pool-size: 10
+        max-lifetime: 1800000
+        minimum-idle: 1
+        pool-name: MySql Query Pool
+        jdbc-url: jdbc:mysql://localhost:3306/MYSQLDB
+        username: USERNAME
+        password: PASSWORD
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        connection-test-query: SELECT 1
+    -
+      enabled: true
+      name: mysql1
+      hikari:
+        maximum-pool-size: 10
+        max-lifetime: 1800000
+        minimum-idle: 1
+        pool-name: MySql1 Query Pool
+        jdbc-url: jdbc:mysql://localhost:3306/MYSQL_ANOTHER_DB
+        username: USERNAME
+        password: PASSWORD
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        connection-test-query: SELECT 1
+    -
+      enabled: true
+      name: oracle
+      hikari:
+        jdbc-url: jdbc:oracle:thin:@//HOST_NAME:1521/SERVICE_NAME
+        username: USERNAME
+        password: PASSWORD
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        maximum-pool-size: 10
+        max-lifetime: 1800000
+        minimum-idle: 1
+        pool-name: Oracle Query Pool
+    -
+      enabled: true
+      name: postgre
+      hikari:
+        type: com.zaxxer.hikari.HikariDataSource
+        jdbc-url: jdbc:postgresql://localhost:5432/POSTGRES_DB
+        username: USERNAME
+        password: PASSWORD
+        driver-class-name: org.postgresql.Driver
+        maximum-pool-size: 10
+        max-lifetime: 1800000
+        minimum-idle: 1
+        connection-test-query: SELECT 1
+        pool-name: Postgres Query Pool
+    -
+      enabled: false
+      name: sqlserver
+      hikari:
+       type: com.zaxxer.hikari.HikariDataSource
+       url: jdbc:sqlserver://localhost;databaseName=SQL_SERVER_DB
+       username: USERNAME
+       password: PASSWORD
+       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+       maximum-pool-size: 10
+       max-lifetime: 1800000
+       minimum-idle: 1
+       connection-test-query: SELECT 1
+       pool-name: Sql Server Query Pool
 
 newrelic:
   inights-insert-key: NEWRELIC_INSIGHT_INSERT_KEY
-  insights-insert-url: https://insights-collector.newrelic.com/v1/accounts/1139936/events
+  insights-insert-url: NEWRELIC_INSIGHT_INSERT_URL
 
 db:
   queries:
     -
-      sql: "select firstname, lastname, email_id from test.admin_user"
-      datasourceType: mysql
-      insightEventType: MySqlTestEvents
+      sql: "QUERY"
+      datasourceName: mysql # datasource to use for query
+      insightEventType: MySqlTestEvents # Newrelic Insight Event name
     -
-      sql: "Select 1 col1"
-      datasourceType: postgre
-      insightEventType: PostgreTestEvents
+      sql: "QUERY"
+      datasourceName: mysql # datasource to use for query
+      insightEventType: MySqlTestEvents # Newrelic Insight Event name
     -
-      sql: "Select count(*) \"total records\" from PRODDTA.F563PLHD"
-      datasourceType: oracle
-      insightEventType: OracleTestEvents
+      sql: "QUERY"
+      datasourceName: mysql1 # datasource to use for query
+      insightEventType: MySql1TestEvents # Newrelic Insight Event name
     -
-      sql: "Select count(*) \"total records\" from PRODDTA.F563PLHD where PHIR01 = ' '"
-      datasourceType: oracle
-      insightEventType: OracleTestEmptyEvents
+      sql: "QUERY"
+      datasourceName: postgre # datasource to use for query
+      insightEventType: PostgreTestEvents # Newrelic Insight Event name

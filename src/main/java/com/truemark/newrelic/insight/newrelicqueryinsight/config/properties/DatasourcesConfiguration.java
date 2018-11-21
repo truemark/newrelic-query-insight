@@ -1,6 +1,6 @@
-package com.truemark.newrelic.insight.newrelicqueryinsight.config;
+package com.truemark.newrelic.insight.newrelicqueryinsight.config.properties;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.truemark.newrelic.insight.newrelicqueryinsight.config.properties.ApplicationDatasource;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -14,11 +14,10 @@ import java.util.List;
  * @author Dilip S Sisodia
  */
 @Data
-//@JsonIgnoreProperties(ignoreUnknown = true)
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties(prefix = "query-datasources")
+@ConfigurationProperties(prefix = "datasources")
 @Slf4j
-public class QueryDatasources {
-  List<String> datasources = new ArrayList<>();
+public class DatasourcesConfiguration {
+  private List<ApplicationDatasource> datasources = new ArrayList<>();
 }

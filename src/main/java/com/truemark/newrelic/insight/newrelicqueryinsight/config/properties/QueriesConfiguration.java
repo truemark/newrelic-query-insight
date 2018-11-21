@@ -1,4 +1,4 @@
-package com.truemark.newrelic.insight.newrelicqueryinsight.config;
+package com.truemark.newrelic.insight.newrelicqueryinsight.config.properties;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -19,6 +19,6 @@ import java.util.List;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "db")
 @Slf4j
-public class AvailableQueries {
-  private List<QueryConfiguration> queries = new ArrayList<>();
+public class QueriesConfiguration {
+  private List<Queries> queries = new ArrayList<>();
 }

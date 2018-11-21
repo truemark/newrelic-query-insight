@@ -1,63 +1,60 @@
 package com.truemark.newrelic.insight.newrelicqueryinsight.config;
 
-import com.truemark.newrelic.insight.newrelicqueryinsight.condition.DatasourceEnabled;
+import com.truemark.newrelic.insight.newrelicqueryinsight.config.properties.ApplicationDatasource;
+import com.truemark.newrelic.insight.newrelicqueryinsight.config.properties.DatasourcesConfiguration;
+import com.truemark.newrelic.insight.newrelicqueryinsight.data.DatasourceContainer;
+import com.truemark.newrelic.insight.newrelicqueryinsight.data.RuntimeDatasourceFactory;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
-import java.util.HashMap;
+import java.util.Optional;
 import javax.sql.DataSource;
 
 /**
  * @author Dilip S Sisodia
  */
 @Configuration
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @Slf4j
 public class DataSourceConfig {
 
   @Autowired
-  private Environment environment;
+  private DatasourcesConfiguration datasourcesConfiguration;
 
-  @DatasourceEnabled("ORACLE")
-  @Bean(name = "oracleDataSource")
-  @ConfigurationProperties(prefix = "oracle.datasource")
-  public DataSource oracleDataSource() {
-    return DataSourceBuilder.create().build();
+  @Bean
+  RuntimeDatasourceFactory runtimeDatasourceFactory() {
+    return new RuntimeDatasourceFactory() {
+      @Override
+      public DataSource getDatasource(String datasourceName) {
+        return new HikariDataSource(hikariConfig(datasourceName));
+      }
+    };
   }
 
-  @DatasourceEnabled("POSTGRE")
-  @Bean(name = "postgreDataSource")
-  @ConfigurationProperties(prefix = "postgre.datasource")
-  public DataSource postgreDataSource() {
-    return DataSourceBuilder.create().build();
+  @Bean(name = "runtimeDatasourceContainer")
+  DatasourceContainer container() {
+    DatasourceContainer container = new DatasourceContainer();
+    container.setRuntimeDatasourceFactory(runtimeDatasourceFactory());
+    return container;
   }
 
-  @DatasourceEnabled("SQLSERVER")
-  @Bean(name = "sqlServerDataSource")
-  @ConfigurationProperties(prefix = "sql-server.datasource")
-  public DataSource sqlServerDataSource() {
-    return DataSourceBuilder.create().build();
-  }
-
-  @DatasourceEnabled("MYSQL")
-  @Bean(name = "mysqlDataSource")
-  @ConfigurationProperties(prefix = "mysql.datasource")
-  public DataSource mysqlDataSource() {
-    return DataSourceBuilder.create().build();
-  }
-
-  private HashMap<String, Object> getJpaProperties(String datasourceType) {
-    HashMap<String, Object> properties = new HashMap<>();
-    properties.put("hibernate.hbm2ddl.auto",
-        environment.getProperty("hibernate.hbm2ddl.auto"));
-    properties.put("hibernate.dialect",
-        environment.getProperty(datasourceType + ".hibernate.dialect"));
-    return properties;
+  public HikariConfig hikariConfig(String datasourceName) {
+    Optional<ApplicationDatasource> datasourceConfiguration =
+        datasourcesConfiguration.getDatasources().stream().filter(ds ->
+            ds.getName().equals(datasourceName)).findFirst();
+    return datasourceConfiguration
+        .orElseThrow(() ->
+            new BeanCreationException("No datasource with " + "name" +
+                datasourceName + "found.")).getHikari();
   }
 
 }

@@ -1,6 +1,6 @@
 package com.truemark.newrelic.insight.newrelicqueryinsight.service;
 
-import com.truemark.newrelic.insight.newrelicqueryinsight.config.QueryConfiguration;
+import com.truemark.newrelic.insight.newrelicqueryinsight.config.properties.Queries;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ import java.util.List;
  * @author Dilip S Sisodia
  */
 public interface SetupService {
-  List<QueryConfiguration> getQueriesByDatasource(String datasource);
+  List<Queries> getQueriesByDatasource(String datasource);
 }
