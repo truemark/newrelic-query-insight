@@ -8,9 +8,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Annotation for datasource enabled check.
+ *
  * @author Dilip S Sisodia
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Conditional(DatasourceEnabledCondition.class)
 public @interface DatasourceEnabled {

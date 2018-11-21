@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Extracts result from result set.
+ *
  * @author Dilip S Sisodia
  */
 public class CustomResultSetExtractor implements ResultSetExtractor<List<Map<String, Object>>> {

@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
+ * Rest client configuration.
+ *
  * @author Dilip S Sisodia
  */
 @Configuration

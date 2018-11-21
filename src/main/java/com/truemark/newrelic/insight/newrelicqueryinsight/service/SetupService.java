@@ -5,6 +5,8 @@ import com.truemark.newrelic.insight.newrelicqueryinsight.config.properties.Quer
 import java.util.List;
 
 /**
+ * Contract for SetupService.
+ *
  * @author Dilip S Sisodia
  */
 public interface SetupService {

@@ -7,16 +7,20 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 import java.util.Map;
 
 /**
+ * Checks if a datasource is enabled.
+ *
  * @author Dilip S Sisodia
  */
 public class DatasourceEnabledCondition implements Condition {
   @Override
-  public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
+  public boolean matches(ConditionContext conditionContext,
+                         AnnotatedTypeMetadata annotatedTypeMetadata) {
     Map<String, Object> attributes = annotatedTypeMetadata.getAnnotationAttributes(
         DatasourceEnabled.class.getName());
     boolean enabledDBType = false;
     String datasourceType = (String) attributes.get("value");
-    enabledDBType = Boolean.parseBoolean(conditionContext.getEnvironment().getProperty(datasourceType.toLowerCase() + ".enabled"));
+    enabledDBType = Boolean.parseBoolean(conditionContext.getEnvironment().getProperty(
+        datasourceType.toLowerCase() + ".enabled"));
     return (datasourceType != null && enabledDBType);
   }
 }

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Properties mapper for queries from properties file.
+ *
  * @author Dilip S Sisodia
  */
 @Data

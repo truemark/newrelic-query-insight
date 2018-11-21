@@ -24,6 +24,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
+        <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
 
         <oracle-jdbc.version>11.2.0.3.0</oracle-jdbc.version>
     </properties>
@@ -86,6 +87,33 @@
                 <configuration>
                     <executable>true</executable>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <configLocation>netradius_checks.xml</configLocation>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.netradius</groupId>
+                        <artifactId>checkstyle-config</artifactId>
+                        <version>0.0.2</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

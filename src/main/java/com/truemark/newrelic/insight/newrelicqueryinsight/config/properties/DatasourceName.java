@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 /**
+ * Holds datasource name.
+ *
  * @author Dilip S Sisodia
  */
 @Component

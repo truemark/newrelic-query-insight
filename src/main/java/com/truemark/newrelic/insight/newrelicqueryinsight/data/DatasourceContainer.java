@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 /**
+ * Container to hold DataSource and CustomDao beans.
+ *
  * @author Dilip S Sisodia
  */
 public class DatasourceContainer {

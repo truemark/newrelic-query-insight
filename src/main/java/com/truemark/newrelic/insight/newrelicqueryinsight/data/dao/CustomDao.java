@@ -1,8 +1,8 @@
 package com.truemark.newrelic.insight.newrelicqueryinsight.data.dao;
 
-import com.truemark.newrelic.insight.newrelicqueryinsight.data.DatasourceContainer;
 import com.truemark.newrelic.insight.newrelicqueryinsight.config.properties.DatasourceName;
 import com.truemark.newrelic.insight.newrelicqueryinsight.data.CustomResultSetExtractor;
+import com.truemark.newrelic.insight.newrelicqueryinsight.data.DatasourceContainer;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Dao class for getting data from database.
+ *
  * @author Dilip S Sisodia
  */
 @Transactional(readOnly = true)

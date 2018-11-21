@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Service to get data from datasource.
+ *
  * @author Dilip S Sisodia
  */
 @Service
@@ -40,7 +42,6 @@ public class DataServiceImpl implements DataService {
 
   public void postDataToInsight(List<Map<String, Object>> data, String eventType) {
     try {
-      log.error(data.toString());
       insightsService.sendEvents(data, eventType);
     } catch (IOException e) {
       log.error("Error sending data to insight: " + e.getMessage());

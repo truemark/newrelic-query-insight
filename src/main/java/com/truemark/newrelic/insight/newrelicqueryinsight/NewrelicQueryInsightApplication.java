@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableConfigurationProperties
 public class NewrelicQueryInsightApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NewrelicQueryInsightApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(NewrelicQueryInsightApplication.class, args);
+  }
 }

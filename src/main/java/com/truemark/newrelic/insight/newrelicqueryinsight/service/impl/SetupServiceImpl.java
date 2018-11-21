@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Setup service for scheduling the polling of data.
+ *
  * @author Dilip S Sisodia
  */
 @Service

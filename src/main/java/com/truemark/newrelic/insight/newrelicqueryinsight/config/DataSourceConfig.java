@@ -20,10 +20,15 @@ import java.util.Optional;
 import javax.sql.DataSource;
 
 /**
+ * Datasource configuration.
+ *
  * @author Dilip S Sisodia
  */
 @Configuration
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {
+    DataSourceAutoConfiguration.class,
+    DataSourceTransactionManagerAutoConfiguration.class,
+    HibernateJpaAutoConfiguration.class})
 @Slf4j
 public class DataSourceConfig {
 
@@ -53,8 +58,8 @@ public class DataSourceConfig {
             ds.getName().equals(datasourceName)).findFirst();
     return datasourceConfiguration
         .orElseThrow(() ->
-            new BeanCreationException("No datasource with " + "name" +
-                datasourceName + "found.")).getHikari();
+            new BeanCreationException("No datasource with " + "name"
+                + datasourceName + "found.")).getHikari();
   }
 
 }
