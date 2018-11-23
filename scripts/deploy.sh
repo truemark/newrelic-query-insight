@@ -13,7 +13,7 @@ fi
 echo "Found $file to deploy"
 
 ssh user@slc-ap-prd-49 <<-EOF
- service newrelicqueryinsight stop
+ sudo service newrelicqueryinsight stop
 EOF
 scp ../target/$file user@slc-ap-prd-49:~/newrelic-query-insight.jar
 ssh user@slc-ap-prd-49 <<-EOF

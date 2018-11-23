@@ -38,14 +38,22 @@ public class SetupServiceImpl implements SetupService {
     for (ApplicationDatasource ads : datasources) {
       if (ads.isEnabled()) {
         List<Queries> queries = getQueriesByDatasource(ads.getName().toLowerCase());
-        dataService.fetchAndPostDataToInsight(ads.getName(), queries);
+        if (queries != null) {
+          dataService.fetchAndPostDataToInsight(ads.getName(), queries);
+        }
       }
     }
   }
 
   @Override
   public List<Queries> getQueriesByDatasource(String datasource) {
-    return queries.getQueries().stream().filter(qc ->
-        qc.getDatasourceName().equalsIgnoreCase(datasource)).collect(Collectors.toList());
+    try {
+      return queries.getQueries().stream().filter(qc ->
+          qc.getDatasourceName().equalsIgnoreCase(datasource)).collect(Collectors.toList());
+    } catch (Exception ex) {
+      log.error("There is some error with your queries in the configuration. "
+          + "Please check the sql, datasourceName and insightEventType for queries.");
+    }
+    return null;
   }
 }
