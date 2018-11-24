@@ -8,11 +8,11 @@ import com.truemark.newrelic.insight.newrelicqueryinsight.service.DataService;
 import com.truemark.newrelic.insight.newrelicqueryinsight.service.SetupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 
 /**
  * Setup service for scheduling the polling of data.
@@ -32,7 +32,7 @@ public class SetupServiceImpl implements SetupService {
   @Autowired
   private DatasourcesConfiguration datasourcesConfiguration;
 
-  @Scheduled(cron = "${job.insight.cron}")
+  @PostConstruct
   public void start() {
     List<ApplicationDatasource> datasources = datasourcesConfiguration.getDatasources();
     for (ApplicationDatasource ads : datasources) {

@@ -16,4 +16,5 @@ public class Queries {
   private String sql;
   private String datasourceName;
   private String insightEventType;
+  private String cronSchedule;
 }

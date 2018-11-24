@@ -3,9 +3,6 @@ spring:
     web-application-type: none
   aop:
     proxy-target-class: false
-job:
-  insight:
-    cron: 0 * * * * ?
 
 datasources:
   datasources:
@@ -87,15 +84,19 @@ db:
       sql: "QUERY"
       datasourceName: mysql # datasource to use for query
       insightEventType: MySqlTestEvents # Newrelic Insight Event name
+      cronSchedule: 0 */5 * * * ?
     -
       sql: "QUERY"
       datasourceName: mysql # datasource to use for query
       insightEventType: MySqlTestEvents # Newrelic Insight Event name
+      cronSchedule: 0 * * * * ?
     -
       sql: "QUERY"
       datasourceName: mysql1 # datasource to use for query
       insightEventType: MySql1TestEvents # Newrelic Insight Event name
+      cronSchedule: 0 */2 * * * ?
     -
       sql: "QUERY"
       datasourceName: postgre # datasource to use for query
       insightEventType: PostgreTestEvents # Newrelic Insight Event name
+      cronSchedule: 0 */3 * * * ?
